@@ -1,0 +1,35 @@
+EduCentre (Integrated Student Management Portal) is MAIWP’s operational portal managing student lifecycle and operational data (students, guardians, attendance, subsidy eligibility) and triggering financial workflows. All financial activities (invoice generation, receipting, reconciliation, subsidy offsetting, fund posting) originate from and are controlled by the Integrated Accounting System (IAS).
+
+Key functional domains:
+- Student lifecycle: application, registration, re-enrolment, transfer, withdrawal, alumni.
+- Attendance: Face ID / manual logging; drives penalty triggers.
+- Fee & subsidy: automated billing, subsidy offsets, penalty generation.
+- Payment & reconciliation: FPX/JomPAY/salary deduction; reconcile with Accounting.
+- Guardian communication: WhatsApp/email/portal access for invoices & attendance.
+- Analytics & compliance: dashboards for collection, subsidy usage; compliance with SAGA & PPIBZW.
+
+Key flow (simplified):
+1) Parent applies, system validates IC & income bracket and centre selection.
+2) Subsidy eligibility verification (B40/M40/Asnaf).
+3) Registration, student code generated.
+4) Fee + deposit category assignment (rules apply).
+5) Attendance captured (Face ID/QR/manual) and feeds penalty triggers.
+6) EduCentre triggers invoice creation event; IAS generates invoice + subsidy offsets + posts AR.
+
+Controls:
+- RBAC + SSO; audit trail with user ID/timestamp/before-after; SoD (Preparer ≠ Approver ≠ Poster).
+- Approval matrix by net financial impact:
+  <= RM5,000 Centre Head
+  RM5,001–RM20,000 Department Head/Jawatankuasa
+  >= RM20,001 Mesyuarat MAIWP
+- GL lock rules by accounting period; retention minimum 7 years.
+
+Non-functional:
+- 3,000+ concurrent users; page load <= 3 seconds; 99.9% availability; TLS 1.3; AES-256 at rest; 2FA.
+
+MVP SUGGESTED MOCKUP MODULES (for fastest prototyping)
+A) Parent Portal: Dashboard + Invoices + Pay + SOA + Notifications
+B) Centre Admin: Student registration + Attendance + Transfer/Withdrawal request
+C) Finance Console: Fee setup + Subsidy setup + Approval queue + AR monitoring + Aging
+D) Audit/Compliance: Audit log viewer + Exception report + Approval history
+E) Integration Log Dashboard: failed syncs, retries, webhook status
