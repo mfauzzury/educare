@@ -4,7 +4,7 @@ export type UserRole = 'parent' | 'centre_admin' | 'centre_head' | 'department_h
 
 export type StudentStatus = 'active' | 'pending' | 'transferred' | 'withdrawn' | 'alumni';
 
-export type SubsidyCategory = 'B40' | 'M40' | 'Asnaf' | 'None';
+export type SubsidyCategory = 'B40' | 'M40' | 'T20' | 'Asnaf' | 'None';
 
 export type InvoiceStatus = 'pending' | 'partially_paid' | 'paid' | 'overdue' | 'cancelled';
 
