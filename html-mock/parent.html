@@ -1,0 +1,689 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EduCentre - Parent Portal</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        .tab-content { display: none; }
+        .tab-content.active { display: block; }
+        .tab-button.active { background-color: #2563eb; color: white; }
+        .calendar-day {
+            aspect-ratio: 1;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+        }
+        .attendance-dot {
+            width: 6px;
+            height: 6px;
+            border-radius: 50%;
+            position: absolute;
+            bottom: 4px;
+        }
+    </style>
+</head>
+<body class="bg-gray-50">
+    <div class="min-h-screen p-8">
+        <div class="max-w-7xl mx-auto space-y-6">
+            <!-- Header -->
+            <div class="flex justify-between items-start">
+                <div>
+                    <h1 class="text-3xl font-bold tracking-tight">Parent Portal</h1>
+                    <p class="text-gray-500">Manage your child's fees, payments, and statements</p>
+                </div>
+                <div class="flex items-center gap-2">
+                    <select class="px-3 py-2 border border-gray-300 rounded-md text-sm">
+                        <option value="2024">Year 2024</option>
+                        <option value="2023">Year 2023</option>
+                    </select>
+                    <button onclick="openNotifications()" class="relative px-4 py-2 border border-gray-300 rounded-md hover:bg-gray-50 flex items-center gap-2">
+                        <i class="fas fa-bell"></i>
+                        Notifications
+                        <span class="absolute -top-1 -right-1 flex h-5 w-5 items-center justify-center rounded-full bg-red-500 text-xs font-semibold text-white">5</span>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Student Info Card -->
+            <div class="bg-gradient-to-r from-blue-50 to-indigo-50 border-blue-200 border rounded-lg p-6">
+                <div class="flex items-center justify-between">
+                    <div class="flex items-center gap-4">
+                        <div class="h-16 w-16 rounded-full bg-blue-600 flex items-center justify-center text-white text-xl font-bold">
+                            AH
+                        </div>
+                        <div>
+                            <h2 class="text-xl font-bold">Ahmad Hasan bin Abdullah</h2>
+                            <p class="text-sm text-gray-600">Student ID: STD001 • IC: 081234-05-1234</p>
+                        </div>
+                    </div>
+                    <a href="login.html" class="px-4 py-2 text-sm font-medium text-gray-700 hover:bg-white/50 rounded-md border border-gray-300">
+                        Logout
+                    </a>
+                </div>
+            </div>
+
+            <!-- Tabs -->
+            <div class="bg-white rounded-lg border border-gray-200">
+                <div class="border-b border-gray-200">
+                    <div class="flex gap-2 p-1">
+                        <button onclick="switchTab('invoices')" class="tab-button active px-4 py-2 text-sm font-medium rounded-md transition-colors">Invoices</button>
+                        <button onclick="switchTab('payments')" class="tab-button px-4 py-2 text-sm font-medium rounded-md transition-colors hover:bg-gray-100">Payment History</button>
+                        <button onclick="switchTab('statement')" class="tab-button px-4 py-2 text-sm font-medium rounded-md transition-colors hover:bg-gray-100">Statement of Account</button>
+                        <button onclick="switchTab('attendance')" class="tab-button px-4 py-2 text-sm font-medium rounded-md transition-colors hover:bg-gray-100">Attendance</button>
+                        <button onclick="switchTab('notifications')" class="tab-button px-4 py-2 text-sm font-medium rounded-md transition-colors hover:bg-gray-100">Notifications</button>
+                    </div>
+                </div>
+
+                <!-- Invoices Tab -->
+                <div id="invoices" class="tab-content active p-6">
+                    <h3 class="font-semibold text-lg mb-4">Invoice List</h3>
+                    <p class="text-sm text-gray-500 mb-4">View and pay your outstanding invoices</p>
+                    <div class="overflow-x-auto">
+                        <table class="w-full text-sm">
+                            <thead class="border-b">
+                                <tr class="text-left">
+                                    <th class="pb-3 font-medium">Invoice #</th>
+                                    <th class="pb-3 font-medium">Issue Date</th>
+                                    <th class="pb-3 font-medium">Due Date</th>
+                                    <th class="pb-3 font-medium">Amount</th>
+                                    <th class="pb-3 font-medium">Subsidy</th>
+                                    <th class="pb-3 font-medium">Net Amount</th>
+                                    <th class="pb-3 font-medium">Status</th>
+                                    <th class="pb-3 font-medium">Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr class="border-b">
+                                    <td class="py-3 font-mono text-xs">INV-2024-001</td>
+                                    <td class="py-3">01/01/2024</td>
+                                    <td class="py-3">15/01/2024</td>
+                                    <td class="py-3">RM 350.00</td>
+                                    <td class="py-3 text-green-600">- RM 175.00</td>
+                                    <td class="py-3 font-semibold">RM 175.00</td>
+                                    <td class="py-3"><span class="px-2 py-1 bg-green-100 text-green-700 text-xs rounded-full">PAID</span></td>
+                                    <td class="py-3">
+                                        <button onclick="openInvoiceModal('INV-2024-001', '01/01/2024', '15/01/2024', '350.00', '175.00', '175.00', 'PAID')" class="text-blue-600 hover:underline text-sm">View</button>
+                                    </td>
+                                </tr>
+                                <tr class="border-b">
+                                    <td class="py-3 font-mono text-xs">INV-2024-002</td>
+                                    <td class="py-3">01/02/2024</td>
+                                    <td class="py-3">15/02/2024</td>
+                                    <td class="py-3">RM 350.00</td>
+                                    <td class="py-3 text-green-600">- RM 175.00</td>
+                                    <td class="py-3 font-semibold">RM 175.00</td>
+                                    <td class="py-3"><span class="px-2 py-1 bg-yellow-100 text-yellow-700 text-xs rounded-full">PENDING</span></td>
+                                    <td class="py-3">
+                                        <button onclick="openInvoiceModal('INV-2024-002', '01/02/2024', '15/02/2024', '350.00', '175.00', '175.00', 'PENDING')" class="text-blue-600 hover:underline text-sm mr-2">View</button>
+                                        <button onclick="openPaymentModal('INV-2024-002', '175.00')" class="px-3 py-1 bg-blue-600 text-white text-sm rounded-md hover:bg-blue-700">Pay Now</button>
+                                    </td>
+                                </tr>
+                                <tr class="border-b">
+                                    <td class="py-3 font-mono text-xs">INV-2024-003</td>
+                                    <td class="py-3">01/03/2024</td>
+                                    <td class="py-3">15/03/2024</td>
+                                    <td class="py-3">RM 350.00</td>
+                                    <td class="py-3 text-green-600">- RM 175.00</td>
+                                    <td class="py-3 font-semibold">RM 175.00</td>
+                                    <td class="py-3"><span class="px-2 py-1 bg-red-100 text-red-700 text-xs rounded-full">OVERDUE</span></td>
+                                    <td class="py-3">
+                                        <button onclick="openInvoiceModal('INV-2024-003', '01/03/2024', '15/03/2024', '350.00', '175.00', '175.00', 'OVERDUE')" class="text-blue-600 hover:underline text-sm mr-2">View</button>
+                                        <button onclick="openPaymentModal('INV-2024-003', '175.00')" class="px-3 py-1 bg-red-600 text-white text-sm rounded-md hover:bg-red-700">Pay Now</button>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <!-- Payments Tab -->
+                <div id="payments" class="tab-content p-6">
+                    <h3 class="font-semibold text-lg mb-4">Payment History</h3>
+                    <p class="text-sm text-gray-500 mb-4">View all your payment transactions</p>
+                    <div class="overflow-x-auto">
+                        <table class="w-full text-sm">
+                            <thead class="border-b">
+                                <tr class="text-left">
+                                    <th class="pb-3 font-medium">Receipt #</th>
+                                    <th class="pb-3 font-medium">Payment Date</th>
+                                    <th class="pb-3 font-medium">Invoice #</th>
+                                    <th class="pb-3 font-medium">Amount Paid</th>
+                                    <th class="pb-3 font-medium">Method</th>
+                                    <th class="pb-3 font-medium">Status</th>
+                                    <th class="pb-3 font-medium">Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr class="border-b">
+                                    <td class="py-3 font-mono text-xs">RCP-2024-001</td>
+                                    <td class="py-3">05/01/2024</td>
+                                    <td class="py-3 font-mono text-xs">INV-2024-001</td>
+                                    <td class="py-3 font-semibold">RM 175.00</td>
+                                    <td class="py-3">FPX</td>
+                                    <td class="py-3"><span class="px-2 py-1 bg-green-100 text-green-700 text-xs rounded-full">COMPLETED</span></td>
+                                    <td class="py-3">
+                                        <button class="text-blue-600 hover:underline text-sm mr-2"><i class="fas fa-download mr-1"></i>Download</button>
+                                        <button class="text-gray-600 hover:underline text-sm"><i class="fas fa-print mr-1"></i>Print</button>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <!-- Statement Tab -->
+                <div id="statement" class="tab-content p-6">
+                    <h3 class="font-semibold text-lg mb-4">Statement of Account</h3>
+                    <p class="text-sm text-gray-500 mb-4">Complete financial statement for Year 2024</p>
+
+                    <div class="grid grid-cols-3 gap-4 mb-6">
+                        <div class="bg-blue-50 border border-blue-200 rounded-lg p-4">
+                            <p class="text-sm text-blue-600 mb-1">Total Invoiced</p>
+                            <p class="text-2xl font-bold text-blue-900">RM 1,050.00</p>
+                        </div>
+                        <div class="bg-green-50 border border-green-200 rounded-lg p-4">
+                            <p class="text-sm text-green-600 mb-1">Total Paid</p>
+                            <p class="text-2xl font-bold text-green-900">RM 175.00</p>
+                        </div>
+                        <div class="bg-orange-50 border border-orange-200 rounded-lg p-4">
+                            <p class="text-sm text-orange-600 mb-1">Outstanding Balance</p>
+                            <p class="text-2xl font-bold text-orange-900">RM 350.00</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Attendance Tab -->
+                <div id="attendance" class="tab-content p-6">
+                    <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+                        <!-- Statistics Card -->
+                        <div class="bg-white border rounded-lg p-6">
+                            <div class="flex items-center gap-2 mb-2">
+                                <i class="fas fa-calendar text-gray-600"></i>
+                                <h3 class="font-semibold">Attendance Summary</h3>
+                            </div>
+                            <p class="text-xs text-gray-500 mb-4">Last 90 days</p>
+                            <div class="space-y-2">
+                                <div class="flex items-center justify-between p-2 rounded-lg bg-green-50 border border-green-200">
+                                    <div class="flex items-center gap-2">
+                                        <div class="h-3 w-3 rounded-full bg-green-500"></div>
+                                        <span class="text-sm font-medium">Present</span>
+                                    </div>
+                                    <span class="text-sm font-bold text-green-700">58 days</span>
+                                </div>
+                                <div class="flex items-center justify-between p-2 rounded-lg bg-yellow-50 border border-yellow-200">
+                                    <div class="flex items-center gap-2">
+                                        <div class="h-3 w-3 rounded-full bg-yellow-500"></div>
+                                        <span class="text-sm font-medium">Late</span>
+                                    </div>
+                                    <span class="text-sm font-bold text-yellow-700">5 days</span>
+                                </div>
+                                <div class="flex items-center justify-between p-2 rounded-lg bg-red-50 border border-red-200">
+                                    <div class="flex items-center gap-2">
+                                        <div class="h-3 w-3 rounded-full bg-red-500"></div>
+                                        <span class="text-sm font-medium">Absent</span>
+                                    </div>
+                                    <span class="text-sm font-bold text-red-700">2 days</span>
+                                </div>
+                            </div>
+                            <div class="pt-3 border-t mt-3">
+                                <div class="flex items-center justify-between">
+                                    <span class="text-sm text-gray-500">Attendance Rate</span>
+                                    <span class="text-lg font-bold text-blue-600">89.2%</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Calendar Card -->
+                        <div class="lg:col-span-2 bg-white border rounded-lg p-6">
+                            <div class="flex items-center justify-between mb-4">
+                                <div>
+                                    <h3 class="font-semibold">January 2024</h3>
+                                    <p class="text-xs text-gray-500">Monthly attendance calendar</p>
+                                </div>
+                                <div class="flex items-center gap-1">
+                                    <button class="px-2 py-1 border rounded hover:bg-gray-50"><i class="fas fa-chevron-left text-xs"></i></button>
+                                    <button class="px-2 py-1 border rounded hover:bg-gray-50 text-xs">Today</button>
+                                    <button class="px-2 py-1 border rounded hover:bg-gray-50"><i class="fas fa-chevron-right text-xs"></i></button>
+                                </div>
+                            </div>
+
+                            <!-- Calendar Grid -->
+                            <div class="grid grid-cols-7 gap-1 text-center">
+                                <!-- Day Headers -->
+                                <div class="text-xs font-semibold text-gray-500 py-2">Sun</div>
+                                <div class="text-xs font-semibold text-gray-500 py-2">Mon</div>
+                                <div class="text-xs font-semibold text-gray-500 py-2">Tue</div>
+                                <div class="text-xs font-semibold text-gray-500 py-2">Wed</div>
+                                <div class="text-xs font-semibold text-gray-500 py-2">Thu</div>
+                                <div class="text-xs font-semibold text-gray-500 py-2">Fri</div>
+                                <div class="text-xs font-semibold text-gray-500 py-2">Sat</div>
+
+                                <!-- Calendar Days -->
+                                <div class="calendar-day p-2 text-gray-300"></div>
+                                <div class="calendar-day p-2 border rounded hover:bg-blue-50 cursor-pointer">
+                                    <span class="text-sm">1</span>
+                                    <div class="attendance-dot bg-green-500"></div>
+                                </div>
+                                <div class="calendar-day p-2 border rounded hover:bg-blue-50 cursor-pointer">
+                                    <span class="text-sm">2</span>
+                                    <div class="attendance-dot bg-green-500"></div>
+                                </div>
+                                <div class="calendar-day p-2 border rounded hover:bg-blue-50 cursor-pointer">
+                                    <span class="text-sm">3</span>
+                                    <div class="attendance-dot bg-green-500"></div>
+                                </div>
+                                <div class="calendar-day p-2 border rounded hover:bg-blue-50 cursor-pointer">
+                                    <span class="text-sm">4</span>
+                                    <div class="attendance-dot bg-yellow-500"></div>
+                                </div>
+                                <div class="calendar-day p-2 border rounded hover:bg-blue-50 cursor-pointer">
+                                    <span class="text-sm">5</span>
+                                    <div class="attendance-dot bg-green-500"></div>
+                                </div>
+                                <div class="calendar-day p-2 text-gray-300"></div>
+
+                                <div class="calendar-day p-2 text-gray-300"></div>
+                                <div class="calendar-day p-2 border rounded hover:bg-blue-50 cursor-pointer">
+                                    <span class="text-sm">8</span>
+                                    <div class="attendance-dot bg-green-500"></div>
+                                </div>
+                                <div class="calendar-day p-2 border rounded hover:bg-blue-50 cursor-pointer">
+                                    <span class="text-sm">9</span>
+                                    <div class="attendance-dot bg-green-500"></div>
+                                </div>
+                                <div class="calendar-day p-2 border rounded hover:bg-blue-50 cursor-pointer">
+                                    <span class="text-sm">10</span>
+                                    <div class="attendance-dot bg-red-500"></div>
+                                </div>
+                                <div class="calendar-day p-2 border rounded hover:bg-blue-50 cursor-pointer">
+                                    <span class="text-sm">11</span>
+                                    <div class="attendance-dot bg-green-500"></div>
+                                </div>
+                                <div class="calendar-day p-2 border rounded hover:bg-blue-50 cursor-pointer">
+                                    <span class="text-sm">12</span>
+                                    <div class="attendance-dot bg-green-500"></div>
+                                </div>
+                                <div class="calendar-day p-2 text-gray-300"></div>
+
+                                <div class="calendar-day p-2 text-gray-300"></div>
+                                <div class="calendar-day p-2 border rounded bg-blue-50">
+                                    <span class="text-sm font-bold text-blue-600">15</span>
+                                    <div class="attendance-dot bg-green-500"></div>
+                                </div>
+                                <div class="calendar-day p-2 border rounded">
+                                    <span class="text-sm text-gray-400">16</span>
+                                </div>
+                                <div class="calendar-day p-2 border rounded">
+                                    <span class="text-sm text-gray-400">17</span>
+                                </div>
+                                <div class="calendar-day p-2 border rounded">
+                                    <span class="text-sm text-gray-400">18</span>
+                                </div>
+                                <div class="calendar-day p-2 border rounded">
+                                    <span class="text-sm text-gray-400">19</span>
+                                </div>
+                                <div class="calendar-day p-2 text-gray-300"></div>
+                            </div>
+
+                            <!-- Legend -->
+                            <div class="flex items-center justify-center gap-4 mt-4 text-xs">
+                                <span class="flex items-center gap-1">
+                                    <span class="w-3 h-3 rounded-full bg-green-500"></span> Present
+                                </span>
+                                <span class="flex items-center gap-1">
+                                    <span class="w-3 h-3 rounded-full bg-yellow-500"></span> Late
+                                </span>
+                                <span class="flex items-center gap-1">
+                                    <span class="w-3 h-3 rounded-full bg-red-500"></span> Absent
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Notifications Tab -->
+                <div id="notifications" class="tab-content p-6">
+                    <div class="flex items-center gap-2 mb-4">
+                        <i class="fas fa-bell"></i>
+                        <h3 class="font-semibold text-lg">Recent Notifications</h3>
+                    </div>
+                    <p class="text-sm text-gray-500 mb-4">Important updates and reminders</p>
+                    <div class="space-y-3">
+                        <div class="flex items-start gap-4 p-4 rounded-lg border bg-blue-50 border-blue-200 hover:bg-blue-100 cursor-pointer">
+                            <div class="p-2 rounded-full bg-blue-100">
+                                <i class="fas fa-bell text-blue-600"></i>
+                            </div>
+                            <div class="flex-1">
+                                <div class="flex items-start justify-between gap-2">
+                                    <p class="font-semibold text-gray-900">Payment Reminder</p>
+                                    <span class="text-xs text-gray-500 whitespace-nowrap">2 hours ago</span>
+                                </div>
+                                <p class="text-sm text-gray-700 mt-1">Your invoice INV-2024-003 is overdue. Please make payment to avoid late fees.</p>
+                            </div>
+                        </div>
+                        <div class="flex items-start gap-4 p-4 rounded-lg border bg-green-50 border-green-200 hover:bg-green-100 cursor-pointer">
+                            <div class="p-2 rounded-full bg-green-100">
+                                <i class="fas fa-bell text-green-600"></i>
+                            </div>
+                            <div class="flex-1">
+                                <div class="flex items-start justify-between gap-2">
+                                    <p class="font-semibold text-gray-900">Payment Received</p>
+                                    <span class="text-xs text-gray-500 whitespace-nowrap">1 day ago</span>
+                                </div>
+                                <p class="text-sm text-gray-700 mt-1">We have received your payment of RM 175.00 for invoice INV-2024-001.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Notification Modal -->
+    <div id="notificationModal" class="fixed inset-0 bg-black bg-opacity-50 hidden items-center justify-center z-50">
+        <div class="bg-white rounded-lg p-6 max-w-2xl w-full mx-4 max-h-[80vh] overflow-y-auto">
+            <div class="flex items-center gap-2 mb-4">
+                <i class="fas fa-bell"></i>
+                <h2 class="text-xl font-bold">Notifications</h2>
+            </div>
+            <p class="text-sm text-gray-500 mb-4">Recent updates and important announcements</p>
+            <div class="space-y-3 py-4">
+                <div class="flex items-start gap-4 p-4 rounded-lg border bg-blue-50 border-blue-200">
+                    <div class="p-2 rounded-full bg-blue-100">
+                        <i class="fas fa-bell text-blue-600"></i>
+                    </div>
+                    <div class="flex-1">
+                        <div class="flex items-start justify-between gap-2">
+                            <p class="font-semibold text-gray-900">Payment Reminder</p>
+                            <span class="text-xs text-gray-500">2 hours ago</span>
+                        </div>
+                        <p class="text-sm text-gray-700 mt-1">Your invoice INV-2024-003 is overdue. Please make payment to avoid late fees.</p>
+                    </div>
+                </div>
+                <div class="flex items-start gap-4 p-4 rounded-lg border bg-green-50 border-green-200">
+                    <div class="p-2 rounded-full bg-green-100">
+                        <i class="fas fa-bell text-green-600"></i>
+                    </div>
+                    <div class="flex-1">
+                        <div class="flex items-start justify-between gap-2">
+                            <p class="font-semibold text-gray-900">Payment Received</p>
+                            <span class="text-xs text-gray-500">1 day ago</span>
+                        </div>
+                        <p class="text-sm text-gray-700 mt-1">We have received your payment of RM 175.00 for invoice INV-2024-001.</p>
+                    </div>
+                </div>
+            </div>
+            <div class="flex justify-end pt-4 border-t">
+                <button onclick="closeNotifications()" class="px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700">Close</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Payment Modal -->
+    <div id="paymentModal" class="fixed inset-0 bg-black bg-opacity-50 hidden items-center justify-center z-50">
+        <div class="bg-white rounded-lg p-6 max-w-md w-full mx-4">
+            <div class="flex items-center gap-2 mb-4">
+                <i class="fas fa-credit-card text-blue-600"></i>
+                <h2 class="text-xl font-bold">Make Payment</h2>
+            </div>
+
+            <div class="space-y-4">
+                <!-- Invoice Details -->
+                <div class="bg-gray-50 rounded-lg p-4">
+                    <div class="flex justify-between mb-2">
+                        <span class="text-sm text-gray-600">Invoice Number</span>
+                        <span id="paymentInvoice" class="text-sm font-mono font-semibold"></span>
+                    </div>
+                    <div class="flex justify-between mb-2">
+                        <span class="text-sm text-gray-600">Amount to Pay</span>
+                        <span id="paymentAmount" class="text-lg font-bold text-blue-600"></span>
+                    </div>
+                </div>
+
+                <!-- Payment Method Selection -->
+                <div>
+                    <label class="text-sm font-medium mb-2 block">Select Payment Method</label>
+                    <div class="space-y-2">
+                        <label class="flex items-center gap-3 p-3 border rounded-lg cursor-pointer hover:bg-gray-50">
+                            <input type="radio" name="paymentMethod" value="fpx" checked class="text-blue-600">
+                            <div class="flex items-center gap-2">
+                                <i class="fas fa-university text-blue-600"></i>
+                                <span class="font-medium">FPX Online Banking</span>
+                            </div>
+                        </label>
+                        <label class="flex items-center gap-3 p-3 border rounded-lg cursor-pointer hover:bg-gray-50">
+                            <input type="radio" name="paymentMethod" value="jompay" class="text-blue-600">
+                            <div class="flex items-center gap-2">
+                                <i class="fas fa-money-bill-wave text-green-600"></i>
+                                <span class="font-medium">JomPAY</span>
+                            </div>
+                        </label>
+                        <label class="flex items-center gap-3 p-3 border rounded-lg cursor-pointer hover:bg-gray-50">
+                            <input type="radio" name="paymentMethod" value="card" class="text-blue-600">
+                            <div class="flex items-center gap-2">
+                                <i class="fas fa-credit-card text-purple-600"></i>
+                                <span class="font-medium">Credit/Debit Card</span>
+                            </div>
+                        </label>
+                    </div>
+                </div>
+
+                <!-- Action Buttons -->
+                <div class="flex gap-2 pt-4 border-t">
+                    <button onclick="closePaymentModal()" class="flex-1 px-4 py-2 border border-gray-300 rounded-md hover:bg-gray-50">
+                        Cancel
+                    </button>
+                    <button onclick="processPayment()" class="flex-1 px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700">
+                        Proceed to Payment
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Invoice Receipt Modal -->
+    <div id="invoiceModal" class="fixed inset-0 bg-black bg-opacity-50 hidden items-center justify-center z-50">
+        <div class="bg-white rounded-lg p-8 max-w-2xl w-full mx-4 max-h-[90vh] overflow-y-auto">
+            <!-- Invoice Header -->
+            <div class="flex items-start justify-between mb-6">
+                <div>
+                    <h2 class="text-2xl font-bold text-gray-900">INVOICE</h2>
+                    <p class="text-sm text-gray-500 mt-1">EduCentre Management System</p>
+                </div>
+                <div class="text-right">
+                    <p id="invoiceNumber" class="text-lg font-bold font-mono"></p>
+                    <p id="invoiceStatus" class="text-sm mt-1"></p>
+                </div>
+            </div>
+
+            <!-- Student & Centre Details -->
+            <div class="grid grid-cols-2 gap-6 mb-6 pb-6 border-b">
+                <div>
+                    <h3 class="text-xs font-semibold text-gray-500 uppercase mb-2">Student Details</h3>
+                    <p class="font-semibold">Ahmad Hasan bin Abdullah</p>
+                    <p class="text-sm text-gray-600">Student ID: STD001</p>
+                    <p class="text-sm text-gray-600">IC: 081234-05-1234</p>
+                </div>
+                <div>
+                    <h3 class="text-xs font-semibold text-gray-500 uppercase mb-2">Centre Details</h3>
+                    <p class="font-semibold">KEMAS Kampung Baru</p>
+                    <p class="text-sm text-gray-600">Kuala Lumpur</p>
+                    <p class="text-sm text-gray-600">Wilayah Persekutuan</p>
+                </div>
+            </div>
+
+            <!-- Invoice Dates -->
+            <div class="grid grid-cols-2 gap-6 mb-6">
+                <div>
+                    <p class="text-xs font-semibold text-gray-500 uppercase">Issue Date</p>
+                    <p id="invoiceIssueDate" class="text-sm font-medium mt-1"></p>
+                </div>
+                <div>
+                    <p class="text-xs font-semibold text-gray-500 uppercase">Due Date</p>
+                    <p id="invoiceDueDate" class="text-sm font-medium mt-1"></p>
+                </div>
+            </div>
+
+            <!-- Invoice Items -->
+            <div class="mb-6">
+                <table class="w-full text-sm">
+                    <thead class="bg-gray-50 border-b-2 border-gray-200">
+                        <tr>
+                            <th class="text-left py-3 px-4 font-semibold">Description</th>
+                            <th class="text-right py-3 px-4 font-semibold">Amount</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr class="border-b">
+                            <td class="py-3 px-4">Monthly Tuition Fee</td>
+                            <td id="invoiceAmount" class="text-right py-3 px-4 font-medium"></td>
+                        </tr>
+                        <tr class="border-b bg-green-50">
+                            <td class="py-3 px-4 text-green-700">B40 Subsidy (50%)</td>
+                            <td id="invoiceSubsidy" class="text-right py-3 px-4 font-medium text-green-700"></td>
+                        </tr>
+                    </tbody>
+                    <tfoot class="bg-gray-50">
+                        <tr class="border-t-2 border-gray-200">
+                            <td class="py-4 px-4 font-bold text-lg">Total Amount Due</td>
+                            <td id="invoiceNetAmount" class="text-right py-4 px-4 font-bold text-lg text-blue-600"></td>
+                        </tr>
+                    </tfoot>
+                </table>
+            </div>
+
+            <!-- Payment Information (for paid invoices) -->
+            <div id="paymentInfo" class="mb-6 p-4 bg-green-50 border border-green-200 rounded-lg hidden">
+                <div class="flex items-start gap-3">
+                    <i class="fas fa-check-circle text-green-600 text-xl mt-1"></i>
+                    <div class="flex-1">
+                        <p class="font-semibold text-green-900">Payment Received</p>
+                        <p class="text-sm text-green-700 mt-1">This invoice has been paid in full.</p>
+                        <div class="grid grid-cols-2 gap-4 mt-3 text-sm">
+                            <div>
+                                <span class="text-green-600 font-medium">Payment Date:</span>
+                                <span class="ml-2">05/01/2024</span>
+                            </div>
+                            <div>
+                                <span class="text-green-600 font-medium">Method:</span>
+                                <span class="ml-2">FPX Online Banking</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Footer Notes -->
+            <div class="mb-6 p-4 bg-gray-50 rounded-lg">
+                <p class="text-xs text-gray-600">
+                    <strong>Note:</strong> Payment must be made by the due date to avoid late penalties.
+                    For any queries regarding this invoice, please contact our finance department.
+                </p>
+            </div>
+
+            <!-- Action Buttons -->
+            <div class="flex gap-2">
+                <button onclick="closeInvoiceModal()" class="flex-1 px-4 py-2 border border-gray-300 rounded-md hover:bg-gray-50">
+                    Close
+                </button>
+                <button onclick="printInvoice()" class="px-4 py-2 bg-gray-600 text-white rounded-md hover:bg-gray-700 flex items-center gap-2">
+                    <i class="fas fa-print"></i> Print
+                </button>
+                <button onclick="downloadInvoice()" class="px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 flex items-center gap-2">
+                    <i class="fas fa-download"></i> Download PDF
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function switchTab(tabName) {
+            // Hide all tabs
+            document.querySelectorAll('.tab-content').forEach(tab => {
+                tab.classList.remove('active');
+            });
+
+            // Remove active class from all buttons
+            document.querySelectorAll('.tab-button').forEach(btn => {
+                btn.classList.remove('active');
+            });
+
+            // Show selected tab
+            document.getElementById(tabName).classList.add('active');
+
+            // Add active class to clicked button
+            event.target.classList.add('active');
+        }
+
+        function openNotifications() {
+            document.getElementById('notificationModal').style.display = 'flex';
+        }
+
+        function closeNotifications() {
+            document.getElementById('notificationModal').style.display = 'none';
+        }
+
+        function openPaymentModal(invoiceNumber, amount) {
+            document.getElementById('paymentInvoice').textContent = invoiceNumber;
+            document.getElementById('paymentAmount').textContent = 'RM ' + amount;
+            document.getElementById('paymentModal').style.display = 'flex';
+        }
+
+        function closePaymentModal() {
+            document.getElementById('paymentModal').style.display = 'none';
+        }
+
+        function processPayment() {
+            const selectedMethod = document.querySelector('input[name="paymentMethod"]:checked').value;
+            const invoice = document.getElementById('paymentInvoice').textContent;
+            const amount = document.getElementById('paymentAmount').textContent;
+
+            alert(`Processing ${selectedMethod.toUpperCase()} payment for ${invoice}\nAmount: ${amount}\n\nThis is a demo - payment would be processed through the selected gateway.`);
+            closePaymentModal();
+        }
+
+        function openInvoiceModal(invoiceNum, issueDate, dueDate, amount, subsidy, netAmount, status) {
+            document.getElementById('invoiceNumber').textContent = invoiceNum;
+            document.getElementById('invoiceIssueDate').textContent = issueDate;
+            document.getElementById('invoiceDueDate').textContent = dueDate;
+            document.getElementById('invoiceAmount').textContent = 'RM ' + amount;
+            document.getElementById('invoiceSubsidy').textContent = '- RM ' + subsidy;
+            document.getElementById('invoiceNetAmount').textContent = 'RM ' + netAmount;
+
+            // Set status badge
+            let statusBadge = '';
+            if (status === 'PAID') {
+                statusBadge = '<span class="px-3 py-1 bg-green-100 text-green-700 text-xs rounded-full font-semibold">PAID</span>';
+                document.getElementById('paymentInfo').classList.remove('hidden');
+            } else if (status === 'PENDING') {
+                statusBadge = '<span class="px-3 py-1 bg-yellow-100 text-yellow-700 text-xs rounded-full font-semibold">PENDING</span>';
+                document.getElementById('paymentInfo').classList.add('hidden');
+            } else if (status === 'OVERDUE') {
+                statusBadge = '<span class="px-3 py-1 bg-red-100 text-red-700 text-xs rounded-full font-semibold">OVERDUE</span>';
+                document.getElementById('paymentInfo').classList.add('hidden');
+            }
+            document.getElementById('invoiceStatus').innerHTML = statusBadge;
+
+            document.getElementById('invoiceModal').style.display = 'flex';
+        }
+
+        function closeInvoiceModal() {
+            document.getElementById('invoiceModal').style.display = 'none';
+        }
+
+        function printInvoice() {
+            alert('Print functionality would open the browser print dialog for this invoice.');
+        }
+
+        function downloadInvoice() {
+            const invoiceNum = document.getElementById('invoiceNumber').textContent;
+            alert(`Download functionality would generate and download a PDF for ${invoiceNum}`);
+        }
+    </script>
+</body>
+</html>

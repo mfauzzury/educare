@@ -1,0 +1,345 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EduCentre - Admin Dashboard</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body class="bg-gray-50">
+    <!-- Sidebar -->
+    <aside class="fixed left-0 top-0 h-screen w-64 bg-white border-r border-gray-200 flex flex-col">
+        <!-- Logo -->
+        <div class="h-16 flex items-center px-6 border-b border-gray-200">
+            <a href="admin.html" class="flex items-center space-x-3">
+                <img src="assets/images/logodsc.png" alt="Datascience Logo" class="h-8 w-auto">
+            </a>
+        </div>
+
+        <!-- Navigation -->
+        <nav class="flex-1 px-3 py-4 space-y-1 overflow-y-auto">
+            <!-- Dashboard -->
+            <a href="admin.html" id="nav-dashboard" class="flex items-center gap-3 px-3 py-2 rounded-md hover:bg-gray-100 text-gray-700">
+                <i class="fas fa-home"></i>
+                <span>Dashboard</span>
+            </a>
+
+            <!-- Manage Section -->
+            <div>
+                <button onclick="toggleManage()" class="w-full flex items-center gap-3 px-3 py-2 rounded-md hover:bg-gray-100 text-gray-700">
+                    <i class="fas fa-users"></i>
+                    <span>Manage</span>
+                    <i id="manageIcon" class="fas fa-chevron-down ml-auto text-xs"></i>
+                </button>
+                <div id="manageMenu" class="ml-4 mt-1 space-y-1" style="display: none;">
+                    <a href="students.html" id="nav-students" class="flex items-center gap-3 px-3 py-2 rounded-md hover:bg-gray-100 text-sm text-gray-700">
+                        <i class="fas fa-graduation-cap"></i>
+                        <span>Student List</span>
+                    </a>
+                    <a href="institutes.html" id="nav-institutes" class="flex items-center gap-3 px-3 py-2 rounded-md hover:bg-gray-100 text-sm text-gray-700">
+                        <i class="fas fa-building"></i>
+                        <span>Institute / School</span>
+                    </a>
+                </div>
+            </div>
+
+            <!-- Attendance -->
+            <a href="attendance.html" id="nav-attendance" class="flex items-center gap-3 px-3 py-2 rounded-md hover:bg-gray-100 text-gray-700">
+                <i class="fas fa-calendar"></i>
+                <span>Attendance</span>
+            </a>
+
+            <!-- Fees -->
+            <a href="fees.html" id="nav-fees" class="flex items-center gap-3 px-3 py-2 rounded-md hover:bg-gray-100 text-gray-700">
+                <i class="fas fa-dollar-sign"></i>
+                <span>Fee Monitoring</span>
+            </a>
+
+            <div class="border-t border-gray-200 my-2"></div>
+
+            <!-- Other Modules -->
+            <a href="#" class="flex items-center gap-3 px-3 py-2 rounded-md hover:bg-gray-100 text-gray-700">
+                <i class="fas fa-wallet"></i>
+                <span>Finance Console</span>
+            </a>
+
+            <a href="#" class="flex items-center gap-3 px-3 py-2 rounded-md hover:bg-gray-100 text-gray-700">
+                <i class="fas fa-file-text"></i>
+                <span>Audit & Compliance</span>
+            </a>
+
+            <a href="#" class="flex items-center gap-3 px-3 py-2 rounded-md hover:bg-gray-100 text-gray-700">
+                <i class="fas fa-chart-line"></i>
+                <span>Integration Dashboard</span>
+            </a>
+        </nav>
+
+        <!-- Footer -->
+        <div class="p-3 border-t border-gray-200 space-y-1">
+            <button class="w-full flex items-center gap-3 px-3 py-2 rounded-md hover:bg-gray-100 text-gray-700">
+                <i class="fas fa-cog"></i>
+                <span>Settings</span>
+            </button>
+            <a href="login.html" class="w-full flex items-center gap-3 px-3 py-2 rounded-md hover:bg-red-50 text-red-600">
+                <i class="fas fa-sign-out-alt"></i>
+                <span>Logout</span>
+            </a>
+        </div>
+    </aside>
+
+    <!-- Main Content -->
+    <main class="ml-64 p-8">
+        <div class="space-y-6">
+            <!-- Header -->
+            <div class="flex items-center justify-between">
+                <div>
+                    <h1 class="text-3xl font-bold tracking-tight">Dashboard</h1>
+                    <p class="text-gray-500">Centre Administration Overview</p>
+                </div>
+                <div class="flex items-center gap-2 px-4 py-2 bg-gradient-to-r from-purple-50 to-blue-50 border border-purple-200 rounded-lg">
+                    <i class="fas fa-sparkles text-purple-600"></i>
+                    <span class="text-sm font-medium text-purple-900">AI-Powered Insights</span>
+                </div>
+            </div>
+
+            <!-- Stats Cards -->
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+                <div class="bg-white border border-gray-200 rounded-lg shadow-sm p-6">
+                    <div class="flex items-center justify-between mb-2">
+                        <p class="text-sm font-medium text-gray-600">Total Students</p>
+                        <i class="fas fa-users text-blue-500"></i>
+                    </div>
+                    <div class="text-2xl font-bold">20</div>
+                    <p class="text-xs text-gray-500 mt-1">Across all centres</p>
+                </div>
+
+                <div class="bg-white border border-gray-200 rounded-lg shadow-sm p-6">
+                    <div class="flex items-center justify-between mb-2">
+                        <p class="text-sm font-medium text-gray-600">Active Students</p>
+                        <i class="fas fa-graduation-cap text-green-500"></i>
+                    </div>
+                    <div class="text-2xl font-bold">18</div>
+                    <p class="text-xs text-gray-500 mt-1">Currently enrolled</p>
+                </div>
+
+                <div class="bg-white border border-gray-200 rounded-lg shadow-sm p-6">
+                    <div class="flex items-center justify-between mb-2">
+                        <p class="text-sm font-medium text-gray-600">Pending Students</p>
+                        <i class="fas fa-user-plus text-orange-500"></i>
+                    </div>
+                    <div class="text-2xl font-bold">2</div>
+                    <p class="text-xs text-gray-500 mt-1">Awaiting approval</p>
+                </div>
+
+                <div class="bg-white border border-gray-200 rounded-lg shadow-sm p-6">
+                    <div class="flex items-center justify-between mb-2">
+                        <p class="text-sm font-medium text-gray-600">Total Institutes</p>
+                        <i class="fas fa-building text-purple-500"></i>
+                    </div>
+                    <div class="text-2xl font-bold">5</div>
+                    <p class="text-xs text-gray-500 mt-1">Active centres</p>
+                </div>
+            </div>
+
+            <!-- AI Insights -->
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                <div class="bg-green-50 border border-green-200 rounded-lg p-6">
+                    <div class="flex items-start gap-3">
+                        <div class="p-2 bg-green-100 rounded-lg">
+                            <i class="fas fa-chart-line text-green-600"></i>
+                        </div>
+                        <div class="flex-1">
+                            <h3 class="font-semibold text-green-900 mb-1">Attendance Trend</h3>
+                            <p class="text-sm text-green-700">Attendance has improved by 3% this month. May shows the highest rate at 95%.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="bg-blue-50 border border-blue-200 rounded-lg p-6">
+                    <div class="flex items-start gap-3">
+                        <div class="p-2 bg-blue-100 rounded-lg">
+                            <i class="fas fa-dollar-sign text-blue-600"></i>
+                        </div>
+                        <div class="flex-1">
+                            <h3 class="font-semibold text-blue-900 mb-1">Fee Collection</h3>
+                            <p class="text-sm text-blue-700">Outstanding fees decreased by 23% from January. Continue monitoring April cohort.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="bg-purple-50 border border-purple-200 rounded-lg p-6">
+                    <div class="flex items-start gap-3">
+                        <div class="p-2 bg-purple-100 rounded-lg">
+                            <i class="fas fa-graduation-cap text-purple-600"></i>
+                        </div>
+                        <div class="flex-1">
+                            <h3 class="font-semibold text-purple-900 mb-1">Student Distribution</h3>
+                            <p class="text-sm text-purple-700">B40 category represents 60% of total students. Subsidy allocation is optimal.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Charts Section -->
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                <!-- Attendance Trends -->
+                <div class="bg-white border border-gray-200 rounded-lg shadow-sm">
+                    <div class="p-6 border-b border-gray-200">
+                        <h3 class="font-semibold text-lg">Attendance Trends</h3>
+                        <p class="text-sm text-gray-500">Monthly attendance rates over 6 months</p>
+                    </div>
+                    <div class="p-6">
+                        <div class="space-y-3">
+                            <div class="flex items-center justify-between">
+                                <span class="text-sm text-gray-600">January</span>
+                                <div class="flex-1 mx-4 bg-gray-200 rounded-full h-2">
+                                    <div class="bg-blue-600 h-2 rounded-full" style="width: 92%"></div>
+                                </div>
+                                <span class="text-sm font-semibold">92%</span>
+                            </div>
+                            <div class="flex items-center justify-between">
+                                <span class="text-sm text-gray-600">February</span>
+                                <div class="flex-1 mx-4 bg-gray-200 rounded-full h-2">
+                                    <div class="bg-blue-600 h-2 rounded-full" style="width: 88%"></div>
+                                </div>
+                                <span class="text-sm font-semibold">88%</span>
+                            </div>
+                            <div class="flex items-center justify-between">
+                                <span class="text-sm text-gray-600">March</span>
+                                <div class="flex-1 mx-4 bg-gray-200 rounded-full h-2">
+                                    <div class="bg-blue-600 h-2 rounded-full" style="width: 94%"></div>
+                                </div>
+                                <span class="text-sm font-semibold">94%</span>
+                            </div>
+                            <div class="flex items-center justify-between">
+                                <span class="text-sm text-gray-600">April</span>
+                                <div class="flex-1 mx-4 bg-gray-200 rounded-full h-2">
+                                    <div class="bg-blue-600 h-2 rounded-full" style="width: 91%"></div>
+                                </div>
+                                <span class="text-sm font-semibold">91%</span>
+                            </div>
+                            <div class="flex items-center justify-between">
+                                <span class="text-sm text-gray-600">May</span>
+                                <div class="flex-1 mx-4 bg-gray-200 rounded-full h-2">
+                                    <div class="bg-blue-600 h-2 rounded-full" style="width: 95%"></div>
+                                </div>
+                                <span class="text-sm font-semibold">95%</span>
+                            </div>
+                            <div class="flex items-center justify-between">
+                                <span class="text-sm text-gray-600">June</span>
+                                <div class="flex-1 mx-4 bg-gray-200 rounded-full h-2">
+                                    <div class="bg-blue-600 h-2 rounded-full" style="width: 93%"></div>
+                                </div>
+                                <span class="text-sm font-semibold">93%</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Student Distribution -->
+                <div class="bg-white border border-gray-200 rounded-lg shadow-sm">
+                    <div class="p-6 border-b border-gray-200">
+                        <h3 class="font-semibold text-lg">Student Distribution</h3>
+                        <p class="text-sm text-gray-500">By subsidy category</p>
+                    </div>
+                    <div class="p-6">
+                        <div class="space-y-4">
+                            <div>
+                                <div class="flex items-center justify-between mb-2">
+                                    <div class="flex items-center gap-2">
+                                        <div class="w-4 h-4 rounded-full bg-purple-500"></div>
+                                        <span class="text-sm font-medium">B40</span>
+                                    </div>
+                                    <span class="text-sm font-semibold">12 students (60%)</span>
+                                </div>
+                                <div class="w-full bg-gray-200 rounded-full h-2">
+                                    <div class="bg-purple-500 h-2 rounded-full" style="width: 60%"></div>
+                                </div>
+                            </div>
+                            <div>
+                                <div class="flex items-center justify-between mb-2">
+                                    <div class="flex items-center gap-2">
+                                        <div class="w-4 h-4 rounded-full bg-orange-500"></div>
+                                        <span class="text-sm font-medium">M40</span>
+                                    </div>
+                                    <span class="text-sm font-semibold">6 students (30%)</span>
+                                </div>
+                                <div class="w-full bg-gray-200 rounded-full h-2">
+                                    <div class="bg-orange-500 h-2 rounded-full" style="width: 30%"></div>
+                                </div>
+                            </div>
+                            <div>
+                                <div class="flex items-center justify-between mb-2">
+                                    <div class="flex items-center gap-2">
+                                        <div class="w-4 h-4 rounded-full bg-blue-500"></div>
+                                        <span class="text-sm font-medium">T20</span>
+                                    </div>
+                                    <span class="text-sm font-semibold">2 students (10%)</span>
+                                </div>
+                                <div class="w-full bg-gray-200 rounded-full h-2">
+                                    <div class="bg-blue-500 h-2 rounded-full" style="width: 10%"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <script>
+        function toggleManage() {
+            const menu = document.getElementById('manageMenu');
+            const icon = document.getElementById('manageIcon');
+
+            if (menu.style.display === 'none' || menu.style.display === '') {
+                menu.style.display = 'block';
+                icon.classList.remove('fa-chevron-down');
+                icon.classList.add('fa-chevron-up');
+            } else {
+                menu.style.display = 'none';
+                icon.classList.remove('fa-chevron-up');
+                icon.classList.add('fa-chevron-down');
+            }
+        }
+
+        // Highlight active page
+        document.addEventListener('DOMContentLoaded', function() {
+            const currentPage = window.location.pathname.split('/').pop();
+
+            // Remove active class from all nav items
+            document.querySelectorAll('nav a').forEach(link => {
+                link.classList.remove('bg-blue-600', 'text-white');
+                link.classList.add('hover:bg-gray-100', 'text-gray-700');
+            });
+
+            // Set active based on current page
+            let activeNav = null;
+            if (currentPage === 'admin.html' || currentPage === '' || currentPage === 'index.html') {
+                activeNav = document.getElementById('nav-dashboard');
+            } else if (currentPage === 'students.html') {
+                activeNav = document.getElementById('nav-students');
+                document.getElementById('manageMenu').style.display = 'block';
+                document.getElementById('manageIcon').classList.remove('fa-chevron-down');
+                document.getElementById('manageIcon').classList.add('fa-chevron-up');
+            } else if (currentPage === 'institutes.html') {
+                activeNav = document.getElementById('nav-institutes');
+                document.getElementById('manageMenu').style.display = 'block';
+                document.getElementById('manageIcon').classList.remove('fa-chevron-down');
+                document.getElementById('manageIcon').classList.add('fa-chevron-up');
+            } else if (currentPage === 'attendance.html') {
+                activeNav = document.getElementById('nav-attendance');
+            } else if (currentPage === 'fees.html') {
+                activeNav = document.getElementById('nav-fees');
+            }
+
+            // Apply active styles
+            if (activeNav) {
+                activeNav.classList.remove('hover:bg-gray-100', 'text-gray-700');
+                activeNav.classList.add('bg-blue-600', 'text-white');
+            }
+        });
+    </script>
+</body>
+</html>

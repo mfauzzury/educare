@@ -1,0 +1,171 @@
+<!-- Sidebar Component - Copy this to all admin pages -->
+<aside class="fixed left-0 top-0 h-screen w-64 bg-white border-r border-gray-200 flex flex-col">
+    <!-- Logo -->
+    <div class="h-16 flex items-center px-6 border-b border-gray-200">
+        <a href="admin.html" class="flex items-center space-x-3">
+            <img src="assets/images/logodsc.png" alt="Datascience Logo" class="h-8 w-auto">
+        </a>
+    </div>
+
+    <!-- Navigation -->
+    <nav class="flex-1 px-3 py-4 space-y-1 overflow-y-auto">
+        <!-- Dashboard -->
+        <a href="admin.html" id="nav-dashboard" class="flex items-center gap-3 px-3 py-2 rounded-md hover:bg-gray-100 text-gray-700">
+            <i class="fas fa-home"></i>
+            <span>Dashboard</span>
+        </a>
+
+        <!-- Students Section -->
+        <div>
+            <button onclick="toggleMenu('students')" class="w-full flex items-center gap-3 px-3 py-2 rounded-md hover:bg-gray-100 text-gray-700">
+                <i class="fas fa-graduation-cap"></i>
+                <span>Students</span>
+                <i id="studentsIcon" class="fas fa-chevron-down ml-auto text-xs"></i>
+            </button>
+            <div id="studentsMenu" class="ml-4 mt-1 space-y-1" style="display: none;">
+                <a href="students.html" id="nav-students" class="flex items-center gap-3 px-3 py-2 rounded-md hover:bg-gray-100 text-sm text-gray-700">
+                    <i class="fas fa-users"></i>
+                    <span>All Students</span>
+                </a>
+                <a href="student-add.html" id="nav-student-add" class="flex items-center gap-3 px-3 py-2 rounded-md hover:bg-gray-100 text-sm text-gray-700">
+                    <i class="fas fa-user-plus"></i>
+                    <span>Add New</span>
+                </a>
+                <a href="student-categories.html" id="nav-student-categories" class="flex items-center gap-3 px-3 py-2 rounded-md hover:bg-gray-100 text-sm text-gray-700">
+                    <i class="fas fa-folder"></i>
+                    <span>Categories</span>
+                </a>
+            </div>
+        </div>
+
+        <!-- Institutes Section -->
+        <div>
+            <button onclick="toggleMenu('institutes')" class="w-full flex items-center gap-3 px-3 py-2 rounded-md hover:bg-gray-100 text-gray-700">
+                <i class="fas fa-building"></i>
+                <span>Institutes</span>
+                <i id="institutesIcon" class="fas fa-chevron-down ml-auto text-xs"></i>
+            </button>
+            <div id="institutesMenu" class="ml-4 mt-1 space-y-1" style="display: none;">
+                <a href="institutes.html" id="nav-institutes" class="flex items-center gap-3 px-3 py-2 rounded-md hover:bg-gray-100 text-sm text-gray-700">
+                    <i class="fas fa-building"></i>
+                    <span>All Institutes</span>
+                </a>
+                <a href="institute-add.html" id="nav-institute-add" class="flex items-center gap-3 px-3 py-2 rounded-md hover:bg-gray-100 text-sm text-gray-700">
+                    <i class="fas fa-user-plus"></i>
+                    <span>Add New</span>
+                </a>
+                <a href="institute-categories.html" id="nav-institute-categories" class="flex items-center gap-3 px-3 py-2 rounded-md hover:bg-gray-100 text-sm text-gray-700">
+                    <i class="fas fa-folder"></i>
+                    <span>Categories</span>
+                </a>
+            </div>
+        </div>
+
+        <!-- Attendance -->
+        <a href="attendance.html" id="nav-attendance" class="flex items-center gap-3 px-3 py-2 rounded-md hover:bg-gray-100 text-gray-700">
+            <i class="fas fa-calendar"></i>
+            <span>Attendance</span>
+        </a>
+
+        <!-- Fees -->
+        <a href="fees.html" id="nav-fees" class="flex items-center gap-3 px-3 py-2 rounded-md hover:bg-gray-100 text-gray-700">
+            <i class="fas fa-dollar-sign"></i>
+            <span>Fee Monitoring</span>
+        </a>
+
+        <div class="border-t border-gray-200 my-2"></div>
+
+        <!-- Other Modules -->
+        <a href="#" class="flex items-center gap-3 px-3 py-2 rounded-md hover:bg-gray-100 text-gray-700">
+            <i class="fas fa-wallet"></i>
+            <span>Finance Console</span>
+        </a>
+
+        <a href="#" class="flex items-center gap-3 px-3 py-2 rounded-md hover:bg-gray-100 text-gray-700">
+            <i class="fas fa-file-text"></i>
+            <span>Audit & Compliance</span>
+        </a>
+
+        <a href="#" class="flex items-center gap-3 px-3 py-2 rounded-md hover:bg-gray-100 text-gray-700">
+            <i class="fas fa-chart-line"></i>
+            <span>Integration Dashboard</span>
+        </a>
+    </nav>
+
+    <!-- Footer -->
+    <div class="p-3 border-t border-gray-200 space-y-1">
+        <button class="w-full flex items-center gap-3 px-3 py-2 rounded-md hover:bg-gray-100 text-gray-700">
+            <i class="fas fa-cog"></i>
+            <span>Settings</span>
+        </button>
+        <a href="login.html" class="w-full flex items-center gap-3 px-3 py-2 rounded-md hover:bg-red-50 text-red-600">
+            <i class="fas fa-sign-out-alt"></i>
+            <span>Logout</span>
+        </a>
+    </div>
+</aside>
+
+<!-- Sidebar JavaScript - Add this to the end of body before </body> -->
+<script>
+    function toggleMenu(menuName) {
+        const menu = document.getElementById(menuName + 'Menu');
+        const icon = document.getElementById(menuName + 'Icon');
+
+        if (menu.style.display === 'none' || menu.style.display === '') {
+            menu.style.display = 'block';
+            icon.classList.remove('fa-chevron-down');
+            icon.classList.add('fa-chevron-up');
+        } else {
+            menu.style.display = 'none';
+            icon.classList.remove('fa-chevron-up');
+            icon.classList.add('fa-chevron-down');
+        }
+    }
+
+    // Highlight active page and expand relevant menu if needed
+    document.addEventListener('DOMContentLoaded', function() {
+        const currentPage = window.location.pathname.split('/').pop();
+
+        // Remove active class from all nav items
+        document.querySelectorAll('nav a').forEach(link => {
+            link.classList.remove('bg-blue-600', 'text-white');
+            link.classList.add('hover:bg-gray-100', 'text-gray-700');
+        });
+
+        // Set active based on current page
+        let activeNav = null;
+        if (currentPage === 'admin.html' || currentPage === '' || currentPage === 'index.html') {
+            activeNav = document.getElementById('nav-dashboard');
+        } else if (currentPage === 'students.html' || currentPage === 'student-add.html') {
+            if (currentPage === 'students.html') {
+                activeNav = document.getElementById('nav-students');
+            } else if (currentPage === 'student-add.html') {
+                activeNav = document.getElementById('nav-student-add');
+            }
+            // Expand students menu
+            document.getElementById('studentsMenu').style.display = 'block';
+            document.getElementById('studentsIcon').classList.remove('fa-chevron-down');
+            document.getElementById('studentsIcon').classList.add('fa-chevron-up');
+        } else if (currentPage === 'institutes.html' || currentPage === 'institute-add.html') {
+            if (currentPage === 'institutes.html') {
+                activeNav = document.getElementById('nav-institutes');
+            } else if (currentPage === 'institute-add.html') {
+                activeNav = document.getElementById('nav-institute-add');
+            }
+            // Expand institutes menu
+            document.getElementById('institutesMenu').style.display = 'block';
+            document.getElementById('institutesIcon').classList.remove('fa-chevron-down');
+            document.getElementById('institutesIcon').classList.add('fa-chevron-up');
+        } else if (currentPage === 'attendance.html') {
+            activeNav = document.getElementById('nav-attendance');
+        } else if (currentPage === 'fees.html') {
+            activeNav = document.getElementById('nav-fees');
+        }
+
+        // Apply active styles
+        if (activeNav) {
+            activeNav.classList.remove('hover:bg-gray-100', 'text-gray-700');
+            activeNav.classList.add('bg-blue-600', 'text-white');
+        }
+    });
+</script>

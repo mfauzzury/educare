@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EduCentre - Login</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+    </style>
+</head>
+<body>
+    <div class="min-h-screen flex items-center justify-center bg-gradient-to-br from-blue-50 via-indigo-50 to-purple-50">
+        <div class="w-full max-w-md px-4">
+            <div class="bg-white border border-gray-200 rounded-lg shadow-sm">
+                <div class="space-y-4 text-center pb-6 pt-6 px-6">
+                    <div class="flex justify-center">
+                        <img src="assets/images/logodsc.png" alt="Datascience Logo" class="h-10 w-auto">
+                    </div>
+                    <div>
+                        <h1 class="text-2xl font-bold text-blue-600">EduCentre</h1>
+                        <p class="text-base mt-2 text-gray-500">Student Management Portal</p>
+                    </div>
+                </div>
+                <div class="px-6 pb-6">
+                    <form onsubmit="handleLogin(event)" class="space-y-4">
+                        <div class="space-y-2">
+                            <label for="userType" class="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70">Login As</label>
+                            <select id="userType" class="flex h-10 w-full items-center justify-between rounded-md border border-gray-300 bg-white px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500">
+                                <option value="parent">Parent / Student</option>
+                                <option value="admin">Admin</option>
+                            </select>
+                        </div>
+
+                        <div class="space-y-2">
+                            <label for="email" class="text-sm font-medium leading-none">Email / Student ID</label>
+                            <input
+                                id="email"
+                                type="text"
+                                placeholder="Enter your email or student ID"
+                                required
+                                class="flex h-10 w-full rounded-md border border-gray-300 bg-white px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+                            />
+                        </div>
+
+                        <div class="space-y-2">
+                            <label for="password" class="text-sm font-medium leading-none">Password</label>
+                            <input
+                                id="password"
+                                type="password"
+                                placeholder="Enter your password"
+                                required
+                                class="flex h-10 w-full rounded-md border border-gray-300 bg-white px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+                            />
+                        </div>
+
+                        <div class="flex items-center justify-between text-sm">
+                            <label class="flex items-center gap-2 cursor-pointer">
+                                <input type="checkbox" class="rounded border-gray-300" />
+                                <span class="text-gray-600">Remember me</span>
+                            </label>
+                            <a href="#" class="text-blue-600 hover:text-blue-700">Forgot password?</a>
+                        </div>
+
+                        <button type="submit" class="w-full bg-blue-600 text-white hover:bg-blue-700 h-10 px-4 py-2 rounded-md text-sm font-medium">
+                            Sign In
+                        </button>
+
+                        <div id="registerLink" class="text-center text-sm text-gray-600" style="display: block;">
+                            Don't have an account?
+                            <a href="#" class="text-blue-600 hover:text-blue-700 font-medium">Register here</a>
+                        </div>
+                    </form>
+                </div>
+            </div>
+
+            <div class="mt-6 text-center text-sm text-gray-600">
+                <p>© 2024 EduCentre. All rights reserved.</p>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Update placeholder based on user type
+        document.getElementById('userType').addEventListener('change', function() {
+            const email = document.getElementById('email');
+            const registerLink = document.getElementById('registerLink');
+
+            if (this.value === 'parent') {
+                email.placeholder = 'Enter your email or student ID';
+                registerLink.style.display = 'block';
+            } else {
+                email.placeholder = 'Enter your email';
+                registerLink.style.display = 'none';
+            }
+        });
+
+        function handleLogin(e) {
+            e.preventDefault();
+            const userType = document.getElementById('userType').value;
+
+            if (userType === 'parent') {
+                window.location.href = 'parent.html';
+            } else {
+                window.location.href = 'admin.html';
+            }
+        }
+    </script>
+</body>
+</html>

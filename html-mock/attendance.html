@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EduCentre - Attendance</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body class="bg-gray-50">
+    <aside class="fixed left-0 top-0 h-screen w-64 bg-white border-r border-gray-200 flex flex-col">
+        <div class="h-16 flex items-center px-6 border-b border-gray-200">
+            <a href="admin.html"><img src="assets/images/logodsc.png" alt="Logo" class="h-8 w-auto"></a>
+        </div>
+        <nav class="flex-1 px-3 py-4 space-y-1">
+            <a href="admin.html" class="flex items-center gap-3 px-3 py-2 rounded-md hover:bg-gray-100 text-gray-700">
+                <i class="fas fa-home"></i> Dashboard
+            </a>
+            <div>
+                <button class="w-full flex items-center gap-3 px-3 py-2 rounded-md text-gray-700">
+                    <i class="fas fa-users"></i> Manage
+                </button>
+            </div>
+            <a href="attendance.html" class="flex items-center gap-3 px-3 py-2 rounded-md bg-blue-600 text-white">
+                <i class="fas fa-calendar"></i> Attendance
+            </a>
+            <a href="fees.html" class="flex items-center gap-3 px-3 py-2 rounded-md hover:bg-gray-100 text-gray-700">
+                <i class="fas fa-dollar-sign"></i> Fee Monitoring
+            </a>
+        </nav>
+        <div class="p-3 border-t border-gray-200">
+            <a href="login.html" class="w-full flex items-center gap-3 px-3 py-2 rounded-md hover:bg-red-50 text-red-600">
+                <i class="fas fa-sign-out-alt"></i> Logout
+            </a>
+        </div>
+    </aside>
+
+    <main class="ml-64 p-8">
+        <div class="space-y-6">
+            <div>
+                <h1 class="text-3xl font-bold tracking-tight">Attendance Management</h1>
+                <p class="text-gray-500">Track and manage student attendance</p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-4">
+                <div class="bg-white border rounded-lg p-6">
+                    <div class="flex items-center justify-between mb-2">
+                        <p class="text-sm font-medium text-gray-600">Today's Attendance</p>
+                        <i class="fas fa-calendar-check text-green-500"></i>
+                    </div>
+                    <div class="text-2xl font-bold">92%</div>
+                    <p class="text-xs text-gray-500 mt-1">18 of 20 present</p>
+                </div>
+                <div class="bg-white border rounded-lg p-6">
+                    <div class="flex items-center justify-between mb-2">
+                        <p class="text-sm font-medium text-gray-600">This Week</p>
+                        <i class="fas fa-chart-line text-blue-500"></i>
+                    </div>
+                    <div class="text-2xl font-bold">89%</div>
+                    <p class="text-xs text-gray-500 mt-1">Average rate</p>
+                </div>
+                <div class="bg-white border rounded-lg p-6">
+                    <div class="flex items-center justify-between mb-2">
+                        <p class="text-sm font-medium text-gray-600">Late Arrivals</p>
+                        <i class="fas fa-clock text-orange-500"></i>
+                    </div>
+                    <div class="text-2xl font-bold">3</div>
+                    <p class="text-xs text-gray-500 mt-1">Today</p>
+                </div>
+                <div class="bg-white border rounded-lg p-6">
+                    <div class="flex items-center justify-between mb-2">
+                        <p class="text-sm font-medium text-gray-600">Absent</p>
+                        <i class="fas fa-user-times text-red-500"></i>
+                    </div>
+                    <div class="text-2xl font-bold">2</div>
+                    <p class="text-xs text-gray-500 mt-1">Today</p>
+                </div>
+            </div>
+
+            <div class="bg-white border rounded-lg">
+                <div class="p-6 border-b">
+                    <div class="flex items-center justify-between">
+                        <div>
+                            <h3 class="font-semibold text-lg">Today's Attendance</h3>
+                            <p class="text-sm text-gray-500">January 15, 2024</p>
+                        </div>
+                        <button class="px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700">
+                            <i class="fas fa-download mr-2"></i> Export Report
+                        </button>
+                    </div>
+                </div>
+                <div class="p-6">
+                    <table class="w-full text-sm">
+                        <thead class="border-b">
+                            <tr class="text-left">
+                                <th class="pb-3 font-medium">Student Code</th>
+                                <th class="pb-3 font-medium">Name</th>
+                                <th class="pb-3 font-medium">Centre</th>
+                                <th class="pb-3 font-medium">Check-in Time</th>
+                                <th class="pb-3 font-medium">Method</th>
+                                <th class="pb-3 font-medium">Status</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr class="border-b hover:bg-gray-50">
+                                <td class="py-3 font-mono text-xs">STD001</td>
+                                <td class="py-3 font-medium">Ahmad Hasan bin Abdullah</td>
+                                <td class="py-3">KEMAS Kampung Baru</td>
+                                <td class="py-3">08:15 AM</td>
+                                <td class="py-3"><span class="px-2 py-1 bg-blue-100 text-blue-700 text-xs rounded">Face ID</span></td>
+                                <td class="py-3"><span class="px-2 py-1 bg-green-100 text-green-700 text-xs rounded-full">PRESENT</span></td>
+                            </tr>
+                            <tr class="border-b hover:bg-gray-50">
+                                <td class="py-3 font-mono text-xs">STD002</td>
+                                <td class="py-3 font-medium">Siti Nurhaliza binti Mohd Ali</td>
+                                <td class="py-3">KEMAS Taman Melati</td>
+                                <td class="py-3">08:45 AM</td>
+                                <td class="py-3"><span class="px-2 py-1 bg-blue-100 text-blue-700 text-xs rounded">QR Code</span></td>
+                                <td class="py-3"><span class="px-2 py-1 bg-yellow-100 text-yellow-700 text-xs rounded-full">LATE</span></td>
+                            </tr>
+                            <tr class="border-b hover:bg-gray-50">
+                                <td class="py-3 font-mono text-xs">STD003</td>
+                                <td class="py-3 font-medium">Muhammad Iqbal bin Ahmad</td>
+                                <td class="py-3">KEMAS Kampung Baru</td>
+                                <td class="py-3">-</td>
+                                <td class="py-3">-</td>
+                                <td class="py-3"><span class="px-2 py-1 bg-red-100 text-red-700 text-xs rounded-full">ABSENT</span></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </main>
+</body>
+</html>
